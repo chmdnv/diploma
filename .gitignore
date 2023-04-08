@@ -1,8 +1,8 @@
 /.idea
 **/.ipynb_checkpoints
-/config.ini
 /old/
 /data/ga_hits-002.csv
 /data/ga_sessions.csv
 /data/df_result.pkl
 /data/df_small.pkl
+/config_local.ini
