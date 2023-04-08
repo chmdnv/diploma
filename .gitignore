@@ -1,11 +1,8 @@
 /.idea
 **/.ipynb_checkpoints
-hist_*
 /config.ini
 /old/
 /data/ga_hits-002.csv
 /data/ga_sessions.csv
-/data/data_for_test.json
 /data/df_result.pkl
 /data/df_small.pkl
-/data/ohe.pkl
