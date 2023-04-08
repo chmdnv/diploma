@@ -1,11 +1,13 @@
 # diploma
-Final work of the Skillbox ML 1st module
+Final work of the 1st Skillbox ML module
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 "ga_hits-002.csv" and "ga_sessions.csv" need to be copied in /data/ folder
 
+Use requirements.txt to install all required packages
+
 To run the API, use uvicorn:
-  uvicorn main:app --reload
+* uvicorn main:app --reload
 
 Project files description:
 * preproc2.ipnb - data preparation for modeling
