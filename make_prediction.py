@@ -62,6 +62,13 @@ def add_new_features(data: pd.DataFrame) -> pd.DataFrame:
     return data
 
 
+def prepare_ohe(data: pd.DataFrame, ohe: OneHotEncoder) -> pd.DataFrame:
+    """replace categories not to be seen in ohe with 'other'"""
+    for i, col in enumerate(ohe.feature_names_in_):
+        data[col] = data[col].apply(lambda x: x if x in ohe.categories_[i] else 'other')
+    return data
+
+
 def make_prediction(df: pd.DataFrame) -> list[int]:
     # new features
     df = add_new_features(df)
@@ -89,6 +96,7 @@ def make_prediction(df: pd.DataFrame) -> list[int]:
                    ]].astype('category')
 
     ohe = joblib.load('data/ohe.pkl')
+    cat_feat = prepare_ohe(cat_feat, ohe)
     ohe_cat = ohe.transform(cat_feat)
 
     df_result = pd.concat([df.drop(columns=cat_feat.columns),
@@ -116,9 +124,11 @@ def make_prediction(df: pd.DataFrame) -> list[int]:
 def main():
     data = pd.read_json('data/data_for_test.json',
                         orient='records',
-                        dtype={'visit_date': str, 'visit_time': str}
+                        convert_dates=False,
+                        # dtype={'visit_date': str, 'visit_time': str}
                         )
     target = make_prediction(data.sample())
+    # target = make_prediction(data.iloc[0:1, :].copy())
     print(f"{target=}")
 
 
