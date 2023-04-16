@@ -62,13 +62,6 @@ def add_new_features(data: pd.DataFrame) -> pd.DataFrame:
     return data
 
 
-def prepare_ohe(data: pd.DataFrame, ohe: OneHotEncoder) -> pd.DataFrame:
-    """replace categories not to be seen in ohe with 'other'"""
-    for i, col in enumerate(ohe.feature_names_in_):
-        data[col] = data[col].apply(lambda x: x if x in ohe.categories_[i] else 'other')
-    return data
-
-
 def make_prediction(df: pd.DataFrame) -> list[int]:
     # new features
     df = add_new_features(df)
@@ -83,11 +76,11 @@ def make_prediction(df: pd.DataFrame) -> list[int]:
     df.drop(columns=num_feat.columns, inplace=True)
 
     # заменим в категориальных фичах все '(not set)' и '(none)' значением 'other'
-    for feat in df.columns:
-        df[feat] = df[feat].mask(
-            lambda x: x.isin(('(not set)', '(none)')),
-            'other'
-        )
+    # for feat in df.columns:
+    #     df[feat] = df[feat].mask(
+    #         lambda x: x.isin(('(not set)', '(none)')),
+    #         'other'
+    #     )
 
     # categorical encoding - OHE
     cat_feat = df[['utm_source', 'utm_medium', 'utm_campaign', 'utm_adcontent',
@@ -96,7 +89,6 @@ def make_prediction(df: pd.DataFrame) -> list[int]:
                    ]].astype('category')
 
     ohe = joblib.load('data/ohe.pkl')
-    cat_feat = prepare_ohe(cat_feat, ohe)
     ohe_cat = ohe.transform(cat_feat)
 
     df_result = pd.concat([df.drop(columns=cat_feat.columns),
