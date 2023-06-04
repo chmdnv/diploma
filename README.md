@@ -2,7 +2,7 @@
 Final work of the 1st Skillbox ML module
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-"ga_hits-002.csv" and "ga_sessions.csv" need to be copied in /data/ folder
+"ga_hits-002.csv" and "ga_sessions.csv" need to be copied in /data/ folder for running .ipnb scripts
 
 Use requirements.txt to install all required packages
 
